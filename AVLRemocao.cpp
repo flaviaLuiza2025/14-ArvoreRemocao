@@ -258,30 +258,66 @@ NO* insereArvore(NO* no, int valor) {
 }
 
 NO* removerArvore(NO* no, int valor) {
+    // Passo 1: Busca recursiva do nó a ser removido
     if (no == NULL) {
         cout << "Elemento NAO encontrado.\n";
         return no;
     }
+    
+    // Passo 2: Navega pela árvore até encontrar o valor
     if (valor < no->valor) {
+        // Se o valor é menor, continua buscando na subárvore esquerda
         no->esq = removerArvore(no->esq, valor);
     }
     else if (valor > no->valor) {
+        // Se o valor é maior, continua buscando na subárvore direita
         no->dir = removerArvore(no->dir, valor);
     }
     else {
-                
-        // Caso 1: Nó sem filhos
-        // Se o nó não possui filhos (esquerda e direita são NULL), basta removê-lo e retornar NULL para o pai.
-
-        // Caso 2: Nó com apenas um filho
-        // Se o nó possui apenas um filho (esquerda ou direita), retorna o ponteiro para esse filho, liberando o nó atual.
-
-        // Caso 3: Nó com dois filhos
-        // Se o nó possui dois filhos, encontra o sucessor (menor valor da subárvore direita),
-        // copia o valor do sucessor para o nó atual e remove recursivamente o sucessor.
+        // Passo 3: Nó encontrado! Agora identifique qual caso de remoção aplicar
+        
+        /* ========== CASO 1: Nó sem filhos (Folha) ========== */
+        // Condição: verificar se ambos os ponteiros esquerdo e direito são NULL
+        // Ação: libere a memória do nó e retorne NULL para o pai
+     
+        
+        /* ========== CASO 2: Nó com apenas um filho ========== */
+        // Subcaso 2a: Apenas filho direito existe (esquerda é NULL)
+        // Condição: verificar se o ponteiro esquerdo é NULL
+        // Ação: armazene o ponteiro do filho direito em uma variável temporária,
+        //       libere o nó atual e retorne o ponteiro do filho direito
+        /
+        
+        // Subcaso 2b: Apenas filho esquerdo existe (direita é NULL)
+        // Condição: verificar se o ponteiro direito é NULL
+        // Ação: armazene o ponteiro do filho esquerdo em uma variável temporária,
+        //       libere o nó atual e retorne o ponteiro do filho esquerdo
+            
+        /* ========== CASO 3: Nó com dois filhos ========== */
+        // Estratégia: Encontrar o sucessor (menor valor da subárvore direita)
+        
+        // Passo 3.1: Encontre o sucessor
+        // - Comece pelo filho direito do nó atual
+        // - Desça sempre pela esquerda até encontrar o nó mais à esquerda
+        // - Este é o menor valor da subárvore direita (sucessor)
+      
+        // Passo 3.2: Copie o valor do sucessor para o nó atual
+        // - Isso substitui o valor a ser removido
+   
+        
+        // Passo 3.3: Remova o sucessor da sua posição original
+        // - Chame recursivamente removerArvore na subárvore direita
+        // - O sucessor terá no máximo um filho direito (nunca tem filho esquerdo)
+        // - A remoção será tratada como Caso 1 ou Caso 2
+      
+        
+        /* IMPLEMENTE OS TRÊS CASOS ACIMA */
     }
-    // Atualiza altura e balanceia
+    
+    // Passo 4: Atualiza altura do nó após a remoção
     no->altura = maior(alturaNo(no->esq), alturaNo(no->dir)) + 1;
+    
+    // Passo 5: Balanceia o nó se necessário (propriedade AVL)
     return balancearNo(no);
 }
 
